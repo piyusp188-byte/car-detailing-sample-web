@@ -50,6 +50,7 @@
   background: linear-gradient(90deg, #f5a623 0%, #fff 50%, #f5a623 100%);
   background-size: 200% auto;
   color: transparent;
+  -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
   animation: metallicShimmer 6s linear infinite;

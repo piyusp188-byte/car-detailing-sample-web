@@ -13,7 +13,10 @@
   align-items: center;
   gap: var(--space-2);
   margin: 0 auto var(--space-8);
-  max-width: 900px;
+  max-width: 100%;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+  box-sizing: border-box;
 }
 
 .gallery-chip {
@@ -35,6 +38,18 @@
   transition: all var(--transition-base);
   user-select: none;
   position: relative;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .gallery-filter-toolbar {
+    gap: 6px;
+  }
+  .gallery-chip {
+    padding: 8px 14px;
+    font-size: 0.7rem;
+    min-height: 38px;
+  }
 }
 
 .gallery-chip:hover {

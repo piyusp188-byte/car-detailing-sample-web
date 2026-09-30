@@ -29,7 +29,7 @@
       return null;
     },
     'phone-number': (val) => {
-      const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+      const phoneRegex = /^(\+?1[-.\s]?)?(\(?\d{3}\)?)[-.\s]?\d{3}[-.\s]?\d{4}$|^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
       if (!val || !phoneRegex.test(val.trim())) return 'Please enter a valid phone number (e.g. 214-555-0198).';
       return null;
     },
@@ -59,7 +59,7 @@
 
     const errorMsg = validator(input.value);
     const formGroup = input.closest('.form-group');
-    let errorSpan = formGroup.querySelector('.form-error');
+    const errorSpan = formGroup ? formGroup.querySelector('.form-error') : null;
 
     if (errorMsg) {
       input.classList.add('is-invalid');
@@ -117,10 +117,14 @@
     }
 
     // Capture values
-    const nameVal = document.getElementById('full-name').value.trim();
-    const vehicleVal = document.getElementById('vehicle-info').value.trim();
+    const nameEl = document.getElementById('full-name');
+    const vehicleEl = document.getElementById('vehicle-info');
+    const nameVal = nameEl ? nameEl.value.trim() : '';
+    const vehicleVal = vehicleEl ? vehicleEl.value.trim() : '';
     const serviceSelect = document.getElementById('service-select');
-    const serviceVal = serviceSelect.options[serviceSelect.selectedIndex].text;
+    const serviceVal = (serviceSelect && serviceSelect.selectedIndex >= 0)
+      ? serviceSelect.options[serviceSelect.selectedIndex].text
+      : 'Premium Detail';
 
     // Display confirmation
     if (successCustomerName) successCustomerName.textContent = nameVal;
@@ -140,9 +144,17 @@
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       form.reset();
+      form.querySelectorAll('.form-control').forEach((el) => {
+        el.classList.remove('is-invalid');
+        el.removeAttribute('aria-invalid');
+      });
+      form.querySelectorAll('.form-error').forEach((el) => {
+        el.textContent = '';
+      });
       form.style.display = 'block';
       if (successCard) successCard.classList.remove('active');
-      document.getElementById('full-name').focus();
+      const fullName = document.getElementById('full-name');
+      if (fullName) fullName.focus();
     });
   }
 })();

@@ -247,6 +247,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (headerEl) headerEl.setAttribute('aria-hidden', 'true');
     if (footerEl) footerEl.setAttribute('aria-hidden', 'true');
 
+    // Toggle nav buttons visibility if only 1 item visible
+    const hasMultiple = currentVisibleItems.length > 1;
+    if (lightboxPrev) lightboxPrev.style.display = hasMultiple ? '' : 'none';
+    if (lightboxNext) lightboxNext.style.display = hasMultiple ? '' : 'none';
+
     // Focus close button for accessibility
     setTimeout(() => {
       if (lightboxClose) lightboxClose.focus();
@@ -257,6 +262,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!lightbox || lightbox.hasAttribute('hidden')) return;
 
     lightbox.setAttribute('hidden', '');
+
+    // Reset image to empty data URI to release memory
+    if (lightboxImg) {
+      lightboxImg.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
+    }
 
     // Restore page scroll & assistive tech visibility
     document.body.style.overflow = '';

@@ -102,6 +102,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-bg-base);
   color: var(--color-text-primary);
+  overflow-x: hidden;
 }
 
 body {

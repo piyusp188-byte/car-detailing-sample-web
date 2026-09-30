@@ -28,6 +28,7 @@
     if (!hamburgerBtn || !mobileNav) return;
     hamburgerBtn.setAttribute('aria-expanded', 'true');
     hamburgerBtn.setAttribute('aria-label', 'Close menu');
+    mobileNav.setAttribute('aria-hidden', 'false');
     mobileNav.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -36,6 +37,7 @@
     if (!hamburgerBtn || !mobileNav) return;
     hamburgerBtn.setAttribute('aria-expanded', 'false');
     hamburgerBtn.setAttribute('aria-label', 'Open navigation menu');
+    mobileNav.setAttribute('aria-hidden', 'true');
     mobileNav.classList.remove('open');
     document.body.style.overflow = '';
   }
@@ -101,24 +103,26 @@
 
   function updateActiveNav() {
     let currentId = '';
-    const scrollPos = window.scrollY + 120;
+    const headerHeight = header ? header.offsetHeight : 76;
+    const threshold = headerHeight + 60;
 
     sections.forEach((sec) => {
-      const top = sec.offsetTop;
-      const height = sec.offsetHeight;
-      if (scrollPos >= top && scrollPos < top + height) {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top <= threshold && rect.bottom > threshold) {
         currentId = sec.getAttribute('id');
       }
     });
 
-    navLinks.forEach((link) => {
-      const href = link.getAttribute('href');
-      if (href === `#${currentId}`) {
-        link.classList.add('active');
-      } else {
-        link.classList.remove('active');
-      }
-    });
+    if (currentId) {
+      navLinks.forEach((link) => {
+        const href = link.getAttribute('href');
+        if (href === `#${currentId}`) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
   }
 
   window.addEventListener('scroll', updateActiveNav, { passive: true });

@@ -36,16 +36,17 @@ Double-click `index.html` or open it with Google Chrome, Microsoft Edge, Firefox
 2. Click **Go Live** on the bottom status bar (using the Live Server extension).
 3. The site opens at `http://127.0.0.1:5500/index.html`.
 
-### Option C: Python HTTP Server (Terminal)
+### Option C: Built-in Node.js Server (Zero Dependencies)
+```bash
+node server.js
+```
+Then visit `http://localhost:3000`.
+
+### Option D: Python HTTP Server (Terminal)
 ```bash
 python -m http.server 3000
 ```
 Then visit `http://localhost:3000`.
-
-### Option D: Node.js (Terminal)
-```bash
-npx serve .
-```
 
 ---
 
